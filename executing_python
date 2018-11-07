@@ -1,0 +1,66 @@
+
+Executing Interactive shell
+---------------------------
+{
+  • path on windows :  C:\Python30\python  --> this e.g.
+  • path on Linux   :  /usr/local/bin/python or /usr/bin/python
+  
+  e.g.
+  #python
+  >>>
+  
+  run script
+  #python a1.py
+  
+}
+
+QUit Python
+-----------
+{
+  • Windows  --> Ctrl + Z
+  • Linux    --> Ctrl + D
+}
+
+common Interactive prompt Error
+-------------------------------
+{
+   •  Type Python commands only
+   •  print statements are required only in files
+   •  Don’t indent at the interactive prompt need some experience
+   •  Watch out for prompt changes for compound statements --> Ctrl + C to exit
+   •  Terminate compound statements at the interactive prompt with a blankline { Enter twice to make a compound statement run.}
+   •  The interactive prompt runs one statement at a time.
+}
+
+Example First Script --> a.py
+--------------------
+{
+    # A first Python script
+      import sys # Load a library module
+      print(sys.platform)
+      print(2 ** 100) # Raise 2 to a power
+      x = 'Spam!'
+      print(x * 8) # String repetition
+  }
+  
+  
+  Unix Executable Scripts (#!)
+  ----------------------------
+  {
+    can be used in script to tell os the script is executable, us chomd +X too
+    
+    e.g.
+    ---
+    {
+      #!/usr/local/bin/python           #--> path to python
+      print('The Bright Side ' + 'of Life...') 
+      
+      u can also use
+      --------------
+      {
+        #!/usr/bin/env python         #--> env
+      ...script goes here...
+
+      }
+     }
+}
