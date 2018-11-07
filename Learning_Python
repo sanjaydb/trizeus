@@ -19,11 +19,12 @@ Python Notes
   PyWin32, .NET with IronPython, and Swing with Jython (the Java version of Python,described in Chapter 2) or JPype. 
   
   .Web Development Framwork: Django, TurboGears, web2py, Pylons, Zope, and WebWare, support quick construction of full-featured and 
-    production-quality websites with Python. 
+   production-quality websites with Python. 
   
   .Database Support : Sybase, Oracle, Informix, ODBC, MySQL, PostgreSQL,SQLite, and more
   
-  .Python’s standard pickle module provides a simple object persistence system—it allows programs to easily save and restore entire Python objects to files and file-like objects.
+  .Python’s standard pickle module provides a simple object persistence system—it allows programs to easily save and restore entire 
+   Python objects to files and file-like objects.
   
   .ZODB that providesa complete object-oriented database system for Python scripts, and others (such as SQLObject and SQLAlchemy)
   
@@ -37,11 +38,31 @@ Python Notes
   
   .Byte code compilation , Python virtual Machine (PVM) 
   
-  . three primary implementations of the Python language—CPython, Jython, and IronPython—along with a handful of secondary
-    implementations such as Stackless Python
+  .Three primary implementations of the Python language—CPython, Jython, and IronPython—along with a handful of secondary
+   implementations such as Stackless Python
 
   .The Psyco system is not another Python implementation, but rather a component that extends the byte code execution model to
-    make programs run faster.
+   make programs run faster.
   
+  .Psyco has been shown to speed Python code dramatically. According to its web page,Psyco provides “2x to 100x speed-ups, typically
+   4x, with an unmodified Python interpreterand unmodified source code, just a dynamically loadable C extension module.”
+  
+  .“PyPy” project—an attempt to reimplement Python’s PVM in Python code, to better support optimizations like Psyco.
 
+
+  .Shedskin is an emerging system that takes a different approach to Python program execution—it attempts to translate Python 
+   source code to C++ code,
+
+  .Compilation : Frozen Binaries
+  
+   .The Stackless Python system is a standard CPython implementation variant that does not save state on the C language call stack. This     makes Python more easy to port to small stack architectures, provides efficient multiprocessing options, and fosters novel 
+    programming structures such as coroutines
+    
+  .The Cython system (based on work done by the Pyrex project) is a hybrid language that combines Python code with the ability to call C 
+    functions and use C type declarations for variables, parameters, and class attributes
+    
+    
+    
+    
+    
 }
