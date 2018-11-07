@@ -1,0 +1,47 @@
+07-Nov-2018 -> Happy Diwali :)
+-----------
+
+Python Notes
+------------
+{
+  .Python name after "Monty Python’s Flying Circus" nothing to do with reptile
+  
+  .Python slower than c, c++
+  
+  .Python can be used from website development and gaming to robotics and spacecraft control
+  
+  .Python GUI : Python comes with a standard object-oriented interface to theTk GUI API called tkinter
+  
+  .The wxPython GUI API, based on a C++ library, offers an alternative toolkit for constructing portable GUIs in Python
+  
+  .With the proper library, you can also use GUI support in other toolkits in Python, such as Qt with PyQt, GTK with PyGTK, MFC with
+  
+  PyWin32, .NET with IronPython, and Swing with Jython (the Java version of Python,described in Chapter 2) or JPype. 
+  
+  .Web Development Framwork: Django, TurboGears, web2py, Pylons, Zope, and WebWare, support quick construction of full-featured and 
+    production-quality websites with Python. 
+  
+  .Database Support : Sybase, Oracle, Informix, ODBC, MySQL, PostgreSQL,SQLite, and more
+  
+  .Python’s standard pickle module provides a simple object persistence system—it allows programs to easily save and restore entire Python objects to files and file-like objects.
+  
+  .ZODB that providesa complete object-oriented database system for Python scripts, and others (such as SQLObject and SQLAlchemy)
+  
+  .SQLite embedded SQL database engineis a standard part of Python itself.
+  
+  .The NumPy numeric programming extension for Python mentioned earlier includes such advanced tools as an array object, interfaces 
+    to standard mathematical libraries,and much more.
+  
+  .Python programs can easily be “glued” to components written in other languages in a variety of ways. For example, Python’s C API 
+    lets C programs call and be called by Python programs flexibly
+  
+  .Byte code compilation , Python virtual Machine (PVM) 
+  
+  . three primary implementations of the Python language—CPython, Jython, and IronPython—along with a handful of secondary
+    implementations such as Stackless Python
+
+  .The Psyco system is not another Python implementation, but rather a component that extends the byte code execution model to
+    make programs run faster.
+  
+
+}
