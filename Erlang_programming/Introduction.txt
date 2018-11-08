@@ -1,0 +1,6 @@
+
+Introduction
+------------
+{
+  Erlang is a general-purpose, concurrent, functional programming language, as well as a garbage-collected runtime system
+ }
