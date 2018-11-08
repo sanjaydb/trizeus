@@ -1,0 +1,508 @@
+
+Table 5-1. Basic numeric literals
+Literal Interpretation
+1234, −24, 0, 99999999999999 Integers (unlimited size)
+1.23, 1., 3.14e-10, 4E210, 4.0e+210 Floating-point numbers
+0177, 0x9ff, 0b101010 Octal, hex, and binary literals in 2.6
+0o177, 0x9ff, 0b101010 Octal, hex, and binary literals in 3.0
+3+4j, 3.0+4.0j, 3J Complex number literals
+
+
+−x, +x Negation, identity
+˜x Bitwise NOT (inversion)
+x ** y Power (exponentiation)
+x[i] Indexing (sequence, mapping, others)
+x[i:j:k] Slicing
+x(...) Call (function, method, class, other callable)
+x.attr Attribute reference
+(...) Tuple, expression, generator expression
+[...] List, list comprehension
+{...} Dictionary, set, set and dictionary comprehensions
+
+>>> int(3.1415) # Truncates float to integer
+3
+>>> float(3) # Converts integer to float
+3.0
+
+
+>>> num = 1 / 3.0
+>>> num # Echoes
+0.33333333333333331
+>>> print(num) # print rounds
+0.333333333333
+>>> '%e' % num # String formatting expression
+'3.333333e-001'
+>>> '%4.2f' % num # Alternative floating-point format
+'0.33'
+>>> '{0:4.2f}'.format(num) # String formatting method (Python 2.6 and 3.0)
+'0.33'
+
+>>> num = 1 / 3
+>>> repr(num) # Used by echoes: as-code form
+'0.33333333333333331'
+>>> str(num) # Used by print: user-friendly form
+'0.333333333333'
+
+
+>>>
+>>> 10 / 4 # Differs in 3.0: keeps remainder
+2.5
+>>> 10 // 4 # Same in 3.0: truncates remainder
+2
+>>> 10 / 4.0 # Same in 3.0: keeps remainder
+2.5
+>>> 10 // 4.0 # Same in 3.0: truncates to floor
+2.0
+
+>>>
+>>> 10 / 4
+2
+>>> 10 // 4
+2
+>>> 10 / 4.0
+2.5
+>>> 10
+X = Y // Z # Always truncates, always an int result for ints in 2.6 and 3.0
+X = Y / float(Z) # Guarantees float division with remainder in either 2.6 or 3.0
+
+>>> from __future__ import division # Enable 3.0 "/" behavior
+>>> 10 / 4
+2.5
+>>> 10 // 4
+2
+
+>>> import math
+>>> 5 / −2 # Keep remainder
+−2.5
+>>> 5 // −2 # Floor below result
+-3
+>>> math.trunc(5 / −2) # Truncate instead of floor
+−2
+
+
+>>> import math
+>>> 5 / float(−2) # Remainder in 2.6
+−2.5
+>>> 5 / −2, 5 // −2 # Floor in 2.6
+(−3, −3)
+>>> math.trunc(5 / float(−2)) # Truncate in 2.6
+−2
+
+
+>>> oct(64), hex(64), bin(64)
+('0100', '0x40', '0b1000000')
+
+To go the other way, the built-in int function converts a string of digits to an integer, and an optional second argument lets you 
+specify the numeric base:
+>>> int('64'), int('100', 8), int('40', 16), int('1000000', 2)
+(64, 64, 64, 64)
+>>> int('0x40', 16), int('0b1000000', 2) # Literals okay too
+(64, 64)
+
+>>> eval('64'), eval('0o100'), eval('0x40'), eval('0b1000000')
+(64, 64, 64, 64)
+
+you can also convert integers to octal and hexadecimal strings with string formatting method calls and expressions:
+>>> '{0:o}, {1:x}, {2:b}'.format(64, 64, 64)
+'100, 40, 1000000'
+>>> '%o, %x, %X' % (64, 255, 255)
+'100, ff, FF'
+
+
+>>> X = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+>>> X
+5192296858534827628530496329220095L
+>>> oct(X)
+'017777777777777777777777777777777777777L'
+>>> bin(X)
+'0b1111111111111111111111111111111111111111111111111111111111 ...and so on...
+
+Decimal
+-------
+{
+ The precision is applied globally for all decimals created in the calling
+thread:
+>>> import decimal
+>>> decimal.Decimal(1) / decimal.Decimal(7)
+Decimal('0.1428571428571428571428571429')
+>>> decimal.getcontext().prec = 4
+>>> decimal.Decimal(1) / decimal.Decimal(7)
+Decimal('0.1429')
+
+>>> 1999 + 1.33
+2000.3299999999999
+>>>
+>>> decimal.getcontext().prec = 2
+>>> pay = decimal.Decimal(str(1999 + 1.33))
+>>> pay
+Decimal('2000.33')
+
+
+>>> import decimal
+>>> decimal.Decimal('1.00') / decimal.Decimal('3.00')
+Decimal('0.3333333333333333333333333333')
+>>>
+>>> with decimal.localcontext() as ctx:
+... ctx.prec = 2
+... decimal.Decimal('1.00') / decimal.Decimal('3.00')
+...
+Decimal('0.33')
+>>>
+>>> decimal.Decimal('1.00') / decimal.Decimal('3.00')
+Decimal('0.3333333333333333333333333333')
+}
+
+
+sets
+----
+{
+>>> x = set('abcde')
+>>> y = set('bdxyz')
+
+>>> x
+set(['a', 'c', 'b', 'e', 'd']) # 2.6 display format
+
+>>> 'e' in x # Membership
+True
+>>> x – y # Difference
+set(['a', 'c', 'e'])
+>>> x | y # Union
+set(['a', 'c', 'b', 'e', 'd', 'y', 'x', 'z'])
+>>> x & y # Intersection
+set(['b', 'd'])
+>>> x ^ y # Symmetric difference (XOR)
+set(['a', 'c', 'e', 'y', 'x', 'z'])
+>>> x > y, x < y # Superset, subset
+(False, False)
+
+
+>>> z = x.intersection(y) # Same as x & y
+>>> z
+set(['b', 'd'])
+>>> z.add('SPAM') # Insert one item
+>>> z
+set(['b', 'd', 'SPAM'])
+>>> z.update(set(['X', 'Y'])) # Merge: in-place union
+>>> z
+set(['Y', 'X', 'b', 'd', 'SPAM'])
+>>> z.remove('b') # Delete one item
+>>> z
+set(['Y', 'X', 'd', 'SPAM'])
+
+
+>>> for item in set('abc'): print(item * 3)
+...
+aaa
+ccc
+bbb
+
+>>> S = set([1, 2, 3])
+>>> S | set([3, 4]) # Expressions require both to be sets
+set([1, 2, 3, 4])
+>>> S | [3, 4]
+TypeError: unsupported operand type(s) for |: 'set' and 'list'
+>>> S.union([3, 4]) # But their methods allow any iterable
+set([1, 2, 3, 4])
+>>> S.intersection((1, 3, 5))
+set([1, 3])
+>>> S.issubset(range(-5, 5))
+True
+
+
+>>> set([1, 2, 3, 4]) # Built-in: same as in 2.6
+{1, 2, 3, 4}
+>>> set('spam') # Add all items in an iterable
+{'a', 'p', 's', 'm'}
+>>> {1, 2, 3, 4} # Set literals: new in 3.0
+{1, 2, 3, 4}
+>>> S = {'s', 'p', 'a', 'm'}
+>>> S.add('alot')
+>>> S
+{'a', 'p', 's', 'm', 'alot'}
+
+>>> S1 = {1, 2, 3, 4}
+>>> S1 & {1, 3} # Intersection
+{1, 3}
+>>> {1, 5, 3, 6} | S1 # Union
+{1, 2, 3, 4, 5, 6}
+>>> S1 - {1, 3, 4} # Difference
+{2}
+>>> S1 > {1, 3} # Superset
+True
+
+>>> S1 - {1, 2, 3, 4} # Empty sets print differently
+set()
+>>> type({}) # Because {} is an empty dictionary
+<class 'dict'>
+>>> S = set() # Initialize an empty set
+>>> S.add(1.23)
+>>> S
+{1.23}
+
+>>> {1, 2, 3} | {3, 4}
+{1, 2, 3, 4}
+>>> {1, 2, 3} | [3, 4]
+TypeError: unsupported operand type(s) for |: 'set' and 'list'
+>>> {1, 2, 3}.union([3, 4])
+{1, 2, 3, 4}
+>>> {1, 2, 3}.union({3, 4})
+{1, 2, 3, 4}
+>>> {1, 2, 3}.union(set([3, 4]))
+{1, 2, 3, 4}
+>>> {1, 2, 3}.intersection((1, 3, 5))
+{1, 3}
+>>> {1, 2, 3}.issubset(range(-5, 5))
+True
+
+
+>>> S
+{1.23}
+>>> S.add([1, 2, 3]) # Only mutable objects work in a set
+TypeError: unhashable type: 'list'
+>>> S.add({'a':1})
+TypeError: unhashable type: 'dict'
+>>> S.add((1, 2, 3))
+>>> S # No list or dict, but tuple okay
+{1.23, (1, 2, 3)}
+>>> S | {(4, 5, 6), (1, 2, 3)} # Union: same as S.union(...)
+{1.23, (4, 5, 6), (1, 2, 3)}
+>>> (1, 2, 3) in S # Membership: by complete values
+True
+>>> (1, 4
+
+
+>>> {x ** 2 for x in [1, 2, 3, 4]} # 3.0 set comprehension
+{16, 1, 4, 9}
+
+
+>>> {x for x in 'spam'} # Same as: set('spam')
+{'a', 'p', 's', 'm'}
+>>> {c * 4 for c in 'spam'} # Set of collected expression results
+{'ssss', 'aaaa', 'pppp', 'mmmm'}
+>>> {c * 4 for c in 'spamham'}
+{'ssss', 'aaaa', 'hhhh', 'pppp', 'mmmm'}
+>>> S = {c * 4 for c in 'spam'}
+>>> S | {'mmmm', 'xxxx'}
+{'ssss', 'aaaa', 'pppp', 'mmmm', 'xxxx'}
+>>> S & {
+
+
+>>> L = [1, 2, 1, 3, 2, 4, 5]
+>>> set(L)
+{1, 2, 3, 4, 5}
+>>> L = list(set(L)) # Remove duplicates
+>>> L
+[1, 2, 3, 4, 5]
+
+
+>>> engineers = {'bob', 'sue', 'ann', 'vic'}
+>>> managers = {'tom', 'sue'}
+>>> 'bob' in engineers # Is bob an engineer?
+True
+>>> engineers & managers # Who is both engineer and manager?
+{'sue'}
+>>> engineers | managers # All people in either category
+{'vic', 'sue', 'tom', 'bob', 'ann'}
+>>> engineers – managers # Engineers who are not managers
+{'vic', 'bob', 'ann'}
+>>> managers – engineers # Managers who are not engineers
+{'tom'}
+>>> engineers > managers # Are all managers engineers? (superset)
+False
+>>> {'bob', 'sue'} < engineers # Are both engineers? (subset)
+True
+>>> (managers | engineers) > managers # All people is a superset of managers
+True
+>>> managers ^ engineers # Who is in one but not both?
+{'vic', 'bob', 'ann', 'tom'}
+>>> (managers | engineers) - (managers ^ engineers) # Intersection!
+{'sue'}
+}
+
+
+Boolean
+-------
+{
+
+>>> type(True)
+<class 'bool'>
+>>> isinstance(True, int)
+True
+>>> True == 1 # Same value
+True
+>>> True is 1 # But different object: see the next chapter
+False
+>>> True or False # Same as: 1 or 0
+True
+>>> True + 4 # (Hmmm)
+5
+
+
+}
+
+mix type
+--------
+{
+>>> (2.5).as_integer_ratio() # float object method
+(5, 2)
+>>> f = 2.5
+>>> z = Fraction(*f.as_integer_ratio()) # Convert float -> fraction: two args
+>>> z # Same as Fraction(5, 2)
+Fraction(5, 2)
+>>> x # x from prior interaction
+Fraction(1, 3)
+>>> x + z
+Fraction(17, 6) # 5/2 + 1/3 = 15/6 + 2/6
+>>> float(x) # Convert fraction -> float
+0.33333333333333331
+>>> float(z)
+2.5
+>>> float(x + z)
+2.8333333333333335
+>>> 17 / 6
+2.8333333333333335
+>>> Fraction.from_float(1.75) # Convert float -> fraction: other way
+Fraction(7, 4)
+>>> Fraction(*(1.75).as_integer_ratio())
+Fraction(7, 4)
+
+
+
+
+}
+Fracton
+-------
+{
+
+
+>>> from fractions import Fraction
+>>> x = Fraction(1, 3) # Numerator, denominator
+>>> y = Fraction(4, 6) # Simplified to 2, 3 by gcd
+>>> x
+Fraction(1, 3)
+>>> y
+Fraction(2, 3)
+>>> print(y)
+2/3
+
+>>> Fraction('.25')
+Fraction(1, 4)
+>>> Fraction('1.25')
+Fraction(5, 4)
+>>>
+>>> Fraction('.25') + Fraction('1.25')
+Fraction(3, 2)
+
+
+}
+
+
+
+Random
+------
+{
+>>> import random
+>>> random.random()
+0.44694718823781876
+>>> random.random()
+0.28970426439292829
+>>> random.randint(1, 10)
+5
+>>> random.randint(1, 10)
+4
+>>> random.choice(['Life of Brian', 'Holy Grail', 'Meaning of Life'])
+'Life of Brian'
+>>> random.choice(['Life of Brian', 'Holy Grail', 'Meaning of Life'])
+'Holy Grail'
+}
+
+
+bitwaie oprater
+--------------
+{
+>>> x = 1 # 0001
+>>> x << 2 # Shift left 2 bits: 0100
+4
+>>> x | 2 # Bitwise OR: 0011
+3
+>>>
+
+
+>>> X = 0b0001 # Binary literals
+>>> X << 2 # Shift left
+4
+>>> bin(X << 2) # Binary digits string
+'0b100'
+>>> bin(X | 0b010) # Bitwise OR
+'0b11'
+>>> bin(X & 0b1) # Bitwise AND
+'0b1'
+>>> X = 0xFF # Hex literals
+>>> bin(X)
+'0b11111111'
+>>> X ^ 0b10101010 # Bitwise XOR
+85
+>>> bin(X ^ 0b10101010)
+'0b1010101'
+>>> int('1010101', 2) # String to int per base
+85
+>>> hex(85) # Hex digit string
+'0x55'
+
+
+>>> X = 99
+>>> bin(X), X.bit_length()
+('0b1100011', 7)
+>>> bin(256), (256).bit_length()
+('0b100000000', 9)
+>>> len(bin(256)) - 2
+9
+
+
+
+>>> import math
+>>> math.pi, math.e # Common constants
+(3.1415926535897931, 2.7182818284590451)
+>>> math.sin(2 * math.pi / 180) # Sine, tangent, cosine
+0.034899496702500969
+>>> math.sqrt(144), math.sqrt(2) # Square root
+(12.0, 1.4142135623730951)
+>>> pow(2, 4), 2 ** 4 # Exponentiation (power)
+(16, 16)
+>>> abs(-42.0), sum((1, 2, 3, 4)) # Absolute value, summation
+(42.0, 10)
+>>> min(3, 1, 2, 4), max(3, 1, 2, 4) # Minimum, maximum
+(1, 4)
+
+
+>>> math.floor(2.567), math.floor(-2.567) # Floor (next-lower integer)
+(2, −3)
+>>> math.trunc(2.567), math.trunc(−2.567) # Truncate (drop decimal digits)
+(2, −2)
+>>> int(2.567), int(−2.567) # Truncate (integer conversion)
+(2, −2)
+>>> round(2.567), round(2.467), round(2.567, 2) # Round (Python 3.0 version)
+(3, 2, 2.5699999999999998)
+>>> '%.1f' % 2.567, '{0:.2f}'.format(2.567) # Round for display (Chapter 7)
+('2.6', '2.57')
+
+
+
+>>> (1 / 3), round(1 / 3, 2), ('%.2f' % (1 / 3))
+(0.33333333333333331, 0.33000000000000002, '0.33')
+
+>>> import math
+>>> math.sqrt(144) # Module
+12.0
+>>> 144 ** .5 # Expression
+12.0
+>>> pow(144, .5) # Built-in
+12.0
+>>> math.sqrt(1234567890) # Larger numbers
+35136.418286444619
+>>> 1234567890 ** .5
+35136.418286444619
+>>> pow(1234567890,
+
+}
+
