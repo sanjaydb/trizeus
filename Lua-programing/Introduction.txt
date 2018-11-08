@@ -1,0 +1,7 @@
+
+Introduction
+-----------
+{
+    Lua is designed to be a lightweight embeddable scripting language. It is used for all sorts of applications, from games to web 
+    applications and image processing.
+}
