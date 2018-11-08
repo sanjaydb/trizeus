@@ -1,0 +1,97 @@
+
+Python
+------
+Import
+------
+{
+ from imp import reload           # Must load from module in 3.0
+>>> reload(script1)
+
+
+import imp          --> and use
+imp.reload(M),
+
+or run a 
+from imp import     --> reload and use 
+reload(M)
+
+import module     --> module name =  namespace 
+
+e.g.
+
+test.py
+{
+  a="11"
+  b="22"
+  c="33"
+  print(a, b, c)
+}
+
+>>>import test       # grab the whole module
+11 22 33 
+
+>>>test.a , test.c
+('11', '33' )
+
+
+>>>from test import a, b, c      # copy multipule names
+>>>b,c
+('11', '33' )             --> The results here are printed in parentheses because they are really tuples 
+
+>>> dir(test)
+['__builtins__', '__doc__', '__file__', '__name__', '__package__', 'a', 'b', 'c']
+
+-->, it returns all the attributes inside that module
+
+ >>>exec(open('module.py').read())  --> the interactive prompt without having to import and later reload
+
+ >>> x = 999
+ >>> exec(open('script1.py').read())    --> # Code run in this namespace by default
+...same outout...
+ >>> x # Its assignments can overwrite names here
+ 'Spam!
+
+
+ Python searches for imported modules in every directorylisted in "sys.path"
+ "PYTHONPATH" environment variable
+
+
+C Code --> Python/C integration
+------
+{
+  #include <Python.h>
+...
+Py_Initialize();                                          // This is C, not Python
+PyRun_SimpleString("x = 'brave ' + 'sir robin'");         // But it runs Python code
+}
+
+
+Python standard library has utilities that allow Python programs to be started by other Python programs in separate processes (e.g., os.popen, os.system),
+
+}
+
+
+
+1. Programs are composed of modules.
+2. Modules contain statements.
+3. Statements contain expressions.
+4. Expressions create and process objects.
+
+
+ Built-in objects preview
+ -------------------------
+ {
+    Object type                               Example literals/creation
+    ---------------------------------------------------------------------------
+    Numbers                               1234, 3.1415, 3+4j, Decimal, Fraction
+    Strings                               'spam', "guido's", b'a\x01c'
+    Lists                                 [1, [2, 'three'], 4]
+    Dictionaries                          {'food': 'spam', 'taste': 'yum'}
+    Tuples                                (1, 'spam', 4, 'U')
+    Files                                 myfile = open('eggs', 'r')
+    Sets                                  set('abc'), {'a', 'b', 'c'}
+    Other core types                      Booleans, types, None
+    Program unit types                    Functions, modules, classes 
+    Implementation-related types          Compiled code, stack tracebacks 
+
+}
