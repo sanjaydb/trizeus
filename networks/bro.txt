@@ -1,0 +1,96 @@
+.pivot to pcap from squil
+.networkminer->pcap
+ date --set "08 Feb 2018 18:00:00"
+ sostat
+ sostat-quick
+ sostat-redacted
+ 
+{
+
+
+class=BRO_HTTP BRO_HTTP.mime_type=x-dosexec groupby:site
+
+class=BRO_HTTP "-" site="google.com"
+
+E.g. 01
+--------
+{
+	.was an exe downloded 
+	.was it excuted
+	.as the computer compromised 
+	
+	[B] Flow 
+		{
+			class=BRO_CONN icmp or tcp or udp groupby:srcip
+		}
+		
+		Who did this IP talk to?
+		{
+			class=BRO_CONN icmp or tcp or udp srcip="192.168.5.113" groupby:dstip
+			
+		}
+		And On What port?
+		{
+			class=BRO_CONN icmp or tcp or udp srcip="192.168.5.113" groupby:dstport
+		}
+		What all do we know about source?
+		{
+			groupby:program "192.168.5.113"
+		}
+		Click on bro_ftp
+		{
+			get MD5 from url
+			#string /nsm/bro/extracted/*F5wbcP2Ht50aZITeq4*
+			{
+				will get IP in the exe
+				can be used as malware anlysis
+			}
+		Click info
+		{
+			log info -getpcap
+			for intresting activity
+			save the .pcap
+		}
+		wireshark
+		{
+			filter = tcp.stream eq 0
+			save the file.
+			extart and do virtual anysis.
+		}
+		
+
+check Snort
+-----------
+.scapy
+{
+	# Craft the layer 2 information.
+	# The ip addresses can be random, but I would suggest sticking to RFC1918
+	ip = IP()
+	ip.dst = "192.168.111.111"
+	ip.src = "192.168.111.112"
+
+	# Craft the layer 3 information.
+	# Since we specified port 7789 in our snort rule, 
+	tcp = TCP()
+	tcp.dport = 7789
+	tcp.sport = 1234
+
+	# Set the playload
+	payload = "Trizeus"
+
+	# Use the / operator to compose our packet and transfer it with the send() method.
+	send(ip/tcp/payload)
+}
+
+
+	/etc/init.d/xplico start	
+	
+}
+
+
+run sample
+----------
+{
+	tcpreplay -i eth0 -M10 /opt/samples/*.pcap
+	
+}
