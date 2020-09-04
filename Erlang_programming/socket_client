@@ -1,0 +1,13 @@
+Live Demo
+-module(helloworld). 
+-export([start/0]). 
+
+start() ->
+   {ok, Socket} = gen_udp:open(8789), 
+   io:fwrite("~p",[Socket]), 
+   io:fwrite("~p",[gen_udp:send 
+   (Socket,"localhost",8789,"Hello")]).
+   
+   $erlc *.erl
+$erl -noshell -s helloworld start -s init stop
+#Port<0.346>ok
